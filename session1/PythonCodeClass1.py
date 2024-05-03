@@ -50,6 +50,7 @@ def pnlPerformance(pnl, label):
     print("Daily annualized sharpe: "+str(sharpe))
     print ("Average annual returns: "+str(pnl.mean()*252*100)+"%")
     print ("Total returns: "+str(pnl.sum()*100)+"%");
+    ######### exam
     highwatermark_df = cumpnl.cummax();
     drawdown_df = cumpnl - highwatermark_df;
     maxdrawdown = drawdown_df.min();
