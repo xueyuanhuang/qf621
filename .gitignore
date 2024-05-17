@@ -2,3 +2,4 @@ session1/data.zip
 session1/*.csv
 session4/*.zip
 session4/*.csv
+**/*.zip

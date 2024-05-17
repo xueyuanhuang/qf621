@@ -12,7 +12,7 @@ def portfolioDiagnostics(signal_df, label):
     #NET SECTOR EXPOSURES
     import matplotlib.pyplot as plt
     plt.figure();
-    sector_df = pd.read_csv("sector.csv", error_bad_lines = False)
+    sector_df = pd.read_csv("sector.csv", on_bad_lines='skip')
     d = sector_df.set_index('ticker').to_dict()
     signal_df2 = signal_df.copy(deep=True)
     signal_df2.columns = signal_df2.columns.to_series().map(d['sector'])
@@ -67,7 +67,7 @@ def pnlPerformance(pnl, label):
 
 #=======ACTUAL STRATEGY SCRIPT STARTS HERE============================#
 
-russell_df = pd.read_csv("russell2000pvdata.csv", error_bad_lines = False)
+russell_df = pd.read_csv("russell2000pvdata.csv", on_bad_lines='skip')
 vars = ['open', 'high', 'low', 'close', 'volume']
 rawdata = {}
 reversiontimehorizon = 10           #NUMBER OF TRADING DAYS TO COMPUTE MEAN REVERSION OVER.  THIS IS A PARAMETER FOR FITTING
@@ -97,7 +97,7 @@ marketneutralportfolio = signal_df.copy(deep=True)
 
 
 #SECTOR NEUTRAL STRATEGY BASED ON N DAY REVERSION, ALL STOCKS IN RUSSELL 2000
-sector_df = pd.read_csv("sector.csv", error_bad_lines = False)
+sector_df = pd.read_csv("sector.csv", on_bad_lines='skip')
 d = sector_df.set_index('ticker').to_dict()
 signal_df2 = signal_df.copy(deep=True)                                      #WE JUST REUSE THE PORTFOLIO WEIGHTS FROM PREVIOUS STRATEGY, SINCE WE ARE JUST NEUTRALIZING DIFFERENTLY HERE
 signal_df2.columns = signal_df2.columns.to_series().map(d['sector'])
@@ -148,7 +148,7 @@ portfolioDiagnostics(nonmarketneutralportfolio, "NON MARKET NEUTRAL");
 
 
 #PTG SCRIPT.  YOU NEED TO UNZIP ADDITIONAL CSV FILE FROM "PRICETARGETS.ZIP" INTO SAME DIRECTORY
-russell1000_df = pd.read_csv("russell1000pvdata.csv", error_bad_lines = False)
+russell1000_df = pd.read_csv("russell1000pvdata.csv", on_bad_lines='skip')
 vars = ['open', 'high', 'low', 'close', 'volume']
 rawdata_r1000 = {}
 universesize = 1000                 #SIZE OF PORTFOLIO IN NUMBER OF STOCKS.  IF THIS IS MORE THAN 2000, IT WILL GENERALLY JUST BE CAPPED AT 2000 SINCE BASE UNIVERSE IS RUSSELL 2000
@@ -162,7 +162,7 @@ for tvar in vars:
 
 return_r1000_df = (rawdata_r1000['close'] / rawdata_r1000['close'].shift(1)) - 1
 
-ptg = pd.read_csv("russell1000ptg.csv", error_bad_lines = False)
+ptg = pd.read_csv("russell1000ptg.csv", on_bad_lines='skip')
 ptgvars = ptg.columns[3:]
 rawdataptg = {}
 for tvar in ptgvars:
